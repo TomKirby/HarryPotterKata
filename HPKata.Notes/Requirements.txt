@@ -1,0 +1,12 @@
+
+Concrete Requirements:
+- Books should be able to be added to a basket to allow checkout
+- Single book should cost 8
+- Two diffrent books from series would yield 5% discount
+- Three diffrent books from series would yield 10% discount
+- Four diffrent books from series would yield 20% discount
+- Five diffrent books from series would yield 25% discount
+- Any additional books would be at cost price unless part of another discount bundle.
+
+Anticipated Requirements:
+- further discount for the two new books not included in the inital Requirements (EG 30% discount if 6 books purchased)
