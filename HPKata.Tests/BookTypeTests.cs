@@ -48,6 +48,33 @@ namespace HPKata.Tests
             act.Should().Throw<ArgumentNullException>()
                .And.ParamName.Should().Be("volume");
         }
+
+        [Test]
+        public void EqualityShouldReturnFalseIfNotSameType()
+        {
+            var book = new Book(1,"Volume 1");
+
+            var newFakeBook = new {Cost = 8.0, Volume = "Volume 1" };
+
+            book.Equals(newFakeBook).Should().BeFalse();
+        }
+
+        [TestCase(1, "Volume 1", 1, "Volume 1",true)]
+        [TestCase(2, "Volume 2", 2, "Volume 2",true)]
+        [TestCase(2, "misMatch", 2, "Volume 2",false)]
+        [TestCase(22222, "Volume 2", 2, "Volume 2",false)]
+
+        public void GetHashCodeShouldHashToSameOnlyWhenObjectsMatch(double price1, string volume1, double price2, string volume2,bool expected)
+        {
+            var book1 = new Book(price1, volume1);
+            var book2 = new Book(price2, volume2);
+
+
+            var hashesMatch = book1.GetHashCode() == book2.GetHashCode();
+            hashesMatch.Should().Be(expected);
+        }
+
+
     }
 }
 

@@ -8,7 +8,7 @@ namespace HPKata.Tests.Helpers
 {
     public class BasketBuilder
     {
-        private readonly Basket _basket = new Basket();
+        private readonly Basket _basket = new Basket(new DiscountProvider());
 
         public BasketBuilder WithBooks(int quantity, double price, string volume)
         {
