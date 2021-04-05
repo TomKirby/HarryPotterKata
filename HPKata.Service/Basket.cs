@@ -8,56 +8,56 @@ namespace HPKata.Service
 {
     public class Basket
     {
-        public Basket(DiscountProvider discountProvider)
+        public Basket(IDiscountProvider discountProvider)
         {
             _discountProvider = discountProvider ?? throw new ArgumentNullException(nameof(discountProvider));
         }
 
-        private readonly DiscountProvider _discountProvider;
+        private readonly IDiscountProvider _discountProvider;
         private readonly Dictionary<int,BookSet> _bundles = new Dictionary<int, BookSet>();
 
         public void Add(Book book)
         {
-            var idealBundleId = 0;
-            var newBundlePrice = double.MaxValue;
-            var suitableBundleFound = false;
-            
             if (book == null) throw new ArgumentNullException(nameof(book));
+            var basketBundlePrices = new Dictionary<int, decimal>();
 
-            foreach (var (key, bundle) in _bundles)
+            foreach (var (key, bundle) in _bundles.Where(b => !b.Value.Contains(book)))
             {
-                if(bundle.Books.Contains(book)) continue; //Skip this bundle if its already got that book!
-
-                var projectedDiscount = CalculateProjectedDiscountCost(bundle, book.Cost);
-
-                if (projectedDiscount < newBundlePrice)
-                {
-                    //found a bundle to place this book in which will yield the most discount.
-                    idealBundleId = key;
-                    newBundlePrice = projectedDiscount;
-                    suitableBundleFound = true;
-                }
+                basketBundlePrices[key] = CalculateTotalWithNewBook(bundle, book);
             }
 
-            if (suitableBundleFound)
+            if (basketBundlePrices.Any())
             {
-                _bundles[idealBundleId].Books.Add(book);
-                _bundles[idealBundleId].BundleCost = newBundlePrice;
+                var bestBundle = basketBundlePrices.OrderBy(c => c.Value).First().Key;
+                var bundle = _bundles[bestBundle];
+
+                bundle.BundleTotal = CalculateBundlePrice(bundle, book);
+                bundle.Add(book);
             }
             else
             {
-                _bundles.Add(_bundles.Count + 1,new BookSet(book));
+                _bundles.Add(_bundles.Count + 1, new BookSet(book));
             }
         }
 
-        private double CalculateProjectedDiscountCost(BookSet bundle, double bookCost)
+        public decimal CalculateTotal()
         {
-            return _discountProvider.GetProjectedDiscount(bundle.Books.Count,bundle.GrossBundleCost, bookCost);
+            return GetCurrentBasketTotal();
         }
 
-        public double CalculateTotal()
+        private decimal GetCurrentBasketTotal()
         {
-            return _bundles.Sum(c => c.Value.BundleCost);
+            return _bundles.Sum(c => c.Value.BundleTotal);
+        }
+
+        private decimal CalculateTotalWithNewBook(BookSet bundle, Book book)
+        {
+            return GetCurrentBasketTotal() - bundle.BundleTotal + CalculateBundlePrice(bundle, book);
+        }
+
+        private decimal CalculateBundlePrice(BookSet bundle, Book book)
+        {
+            return _discountProvider.GetProjectedDiscount(bundle, book.Cost);
         }
     }
 }

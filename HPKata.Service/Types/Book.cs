@@ -4,13 +4,13 @@ namespace HPKata.Service.Types
 {
     public class Book
     {
-        public Book(double cost, string volume)
+        public Book(decimal cost, string volume)
         {
             Cost = cost;
             Volume = volume ?? throw new ArgumentNullException(nameof(volume));
         }
 
-        public double Cost { get; }
+        public decimal Cost { get; }
         public string Volume { get; }
 
         public override bool Equals(object obj)

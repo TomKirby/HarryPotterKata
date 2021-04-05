@@ -10,19 +10,31 @@ namespace HPKata.Service.Types
         {
             if (book == null) throw new ArgumentNullException(nameof(book));
             Books = new List<Book>(new []{book});
-            BundleCost = book.Cost;
+            BundleTotal = book.Cost;
         }
 
         public List<Book> Books { get; }
 
-        public double BundleCost { get; set; }
+        public decimal BundleTotal { get; set; }
 
-        public double GrossBundleCost
+        public decimal GrossBundleCost
         {
             get
             {
                 return Books.Sum(c => c.Cost);
             }
+        }
+
+
+        public bool Contains(Book book)
+        {
+            return Books.Contains(book);
+        }
+
+        public void Add(Book book)
+        {
+            if (book == null) throw new ArgumentNullException(nameof(book));
+            Books.Add(book);
         }
     }
 }

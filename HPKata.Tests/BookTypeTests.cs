@@ -15,9 +15,9 @@ namespace HPKata.Tests
         [Test]
         public void BookShouldReturnCost()
         {
-            var book = new Book(8.0,"Volume 1");
+            var book = new Book(8,"Volume 1");
 
-            book.Cost.Should().Be(8.0);
+            book.Cost.Should().Be(8);
         }
 
         [Test]
@@ -64,7 +64,7 @@ namespace HPKata.Tests
         [TestCase(2, "misMatch", 2, "Volume 2",false)]
         [TestCase(22222, "Volume 2", 2, "Volume 2",false)]
 
-        public void GetHashCodeShouldHashToSameOnlyWhenObjectsMatch(double price1, string volume1, double price2, string volume2,bool expected)
+        public void GetHashCodeShouldHashToSameOnlyWhenObjectsMatch(decimal price1, string volume1, decimal price2, string volume2,bool expected)
         {
             var book1 = new Book(price1, volume1);
             var book2 = new Book(price2, volume2);

@@ -5,14 +5,14 @@ namespace HPKata.Tests.Helpers
     [ExcludeFromCodeCoverage]
     public class BundleCalculatorHelper
     {
-        public BundleCalculatorHelper(double bookPrice)
+        public BundleCalculatorHelper(decimal bookPrice)
         {
             _bookPrice = bookPrice;
         }
 
-        private readonly double _bookPrice;
+        private readonly decimal _bookPrice;
         
-        private double _total;
+        private decimal _total;
 
         public BundleCalculatorHelper AddTwoBookBundle()
         {
@@ -45,7 +45,7 @@ namespace HPKata.Tests.Helpers
         }
 
 
-        private double CalculateDiscountCost(int percentage, double bookPrice, int quantity)
+        private decimal CalculateDiscountCost(int percentage, decimal bookPrice, int quantity)
         {
             var cost = bookPrice * quantity;
             var discountAmount = (cost / 100) * percentage;
@@ -53,6 +53,6 @@ namespace HPKata.Tests.Helpers
             return cost - discountAmount;
         }
 
-        public double Calculate => _total;
+        public decimal Calculate => _total;
     }
 }
