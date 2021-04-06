@@ -2,13 +2,13 @@
 Concrete Requirements:
 [x] A book should cost 8
 [x] A book should have a volume.
-[ ] Books should be able to be added to a basket to allow checkout
-[ ] Basket total must return the cheapest combination of discount deals
-[ ] Two diffrent books from series would yield 5% discount
-[ ] Three diffrent books from series would yield 10% discount
-[ ] Four diffrent books from series would yield 20% discount
-[ ] Five diffrent books from series would yield 25% discount
-[ ] Any additional books would be at cost price unless part of another discount bundle.
+[x] Books should be able to be added to a basket to allow checkout
+[x] Basket total must return the cheapest combination of discount deals
+[x] Two diffrent books from series would yield 5% discount
+[x] Three diffrent books from series would yield 10% discount
+[x] Four diffrent books from series would yield 20% discount
+[x] Five diffrent books from series would yield 25% discount
+[x] Any additional books would be at cost price unless part of another discount bundle.
 [ ] 
 
 Anticipated Requirements:
