@@ -154,6 +154,8 @@ namespace HPKata.Tests
         [TestCase(4,2,4,1,1,81.60)]
         [TestCase(5,4,3,2,2,104.40)]
         [TestCase(5,4,3,2,3,108.80)]
+        [TestCase(3,2,4,2,1,78.80)]
+        [TestCase(1,2,3,4,5,100)]
         public void ShouldReturnTheBiggestDiscountAvailable(int vol1,int vol2,int vol3,int vol4, int vol5, decimal expected)
         {
             var basket = new BasketBuilder()
